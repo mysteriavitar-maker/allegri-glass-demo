@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Аллегри — демо оболочки</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#141928;--gold:#c8af87;--paper:#f4f1ec;--glass:rgba(16,20,32,.48);--line:rgba(255,255,255,.16)}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,system-ui,sans-serif;color:#fff;background:#07080c}
+body{background:#07080c url('https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?auto=format&fit=crop&w=2000&q=80') center/cover fixed}
+body::before{content:'';position:fixed;inset:0;background:linear-gradient(180deg,rgba(7,8,12,.35),rgba(7,8,12,.72) 70%);pointer-events:none;z-index:0}
+.wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:18px 20px 80px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px}
+.brand{display:flex;align-items:center;gap:10px;padding:8px 16px;border-radius:999px;background:var(--glass);backdrop-filter:blur(18px);border:1px solid var(--line);text-decoration:none;color:#fff;font-weight:700;letter-spacing:.08em}
+.tri{width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-bottom:12px solid var(--gold)}
+.nav{display:flex;gap:18px;flex-wrap:wrap;font-size:13px}
+.nav a{color:rgba(255,255,255,.82);text-decoration:none}
+.nav a.active,.nav a:hover{color:#fff}
+.phone{font-size:13px;opacity:.85;text-decoration:none;color:#fff}
+.cta{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:#fff;border:0;border-radius:999px;padding:11px 18px;font:600 13px Inter,sans-serif;text-decoration:none;cursor:pointer}
+.hero{min-height:62vh;display:flex;flex-direction:column;justify-content:flex-end;padding:8px 0 12px}
+.glass{background:var(--glass);backdrop-filter:blur(22px);border:1px solid var(--line);border-radius:24px}
+.card{max-width:560px;padding:36px 40px}
+.card h1{margin:0 0 12px;font-size:42px;line-height:1.1;font-weight:600}
+.card p{margin:0 0 22px;opacity:.78;font-size:15px}
+.chips{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}
+.chip{padding:14px 16px;font-size:13px;color:#fff;text-decoration:none}
+.chip b{display:block;font-size:14px;margin-bottom:4px}
+.chip span{opacity:.7;font-size:12px}
+.banner{margin:10px 0 18px;padding:8px 14px;border-radius:999px;background:rgba(200,175,135,.16);color:#f0e2c8;font-size:12px;display:inline-block}
+.grid{display:grid;gap:12px}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}
+.tile{padding:18px;min-height:120px;text-decoration:none;color:#fff}
+.tile small,.muted{opacity:.65;font-size:12px;letter-spacing:.04em}
+.tile h3{margin:6px 0 8px;font-size:16px;font-weight:600}
+.facts{display:flex;gap:22px;margin:16px 0 28px;font-size:13px;opacity:.8}
+.section{margin-top:28px}
+.section h2{font-size:28px;font-weight:600;margin:0 0 14px}
+.page{display:none}.page.on{display:block}
+.form{display:grid;gap:10px;max-width:520px}
+.form input,.form textarea,.form select{border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.08);color:#fff;padding:12px 14px;font:14px Inter,sans-serif}
+.form textarea{min-height:110px}
+.spec{display:grid;grid-template-columns:160px 1fr;gap:8px 18px;font-size:14px}
+.spec b{opacity:.6;font-weight:500}
+footer{margin-top:48px;padding:22px 0 8px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;font-size:13px;opacity:.8}
+@media(max-width:860px){.chips,.g3,.g2{grid-template-columns:1fr 1fr}.nav{display:none}.card{padding:24px}.card h1{font-size:32px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="banner">Демо внешнего вида · живой сайт не изменён</div>
+<header class="top">
+<a class="brand" href="#home"><i class="tri"></i> АЛЛЕГРИ</a>
+<nav class="nav">
+<a href="#home" data-nav>Главная</a>
+<a href="#catalog" data-nav>Направления</a>
+<a href="#production" data-nav>Производство</a>
+<a href="#project" data-nav>Проекты</a>
+<a href="#article" data-nav>Журнал</a>
+<a href="#about" data-nav>О компании</a>
+</nav>
+<div style="display:flex;align-items:center;gap:14px">
+<a class="phone" href="tel:+79915701600">+7 (991) 570-16-00</a>
+<a class="cta" href="#rfq">Получить артикул →</a>
+</div>
+</header>
+
+<section id="home" class="page on">
+<div class="hero">
+<div class="glass card">
+<h1>21 направление · своё производство</h1>
+<p>Точность. Масштаб. Контроль.</p>
+<a class="cta" href="#rfq">Получить артикул →</a>
+</div>
+</div>
+<div class="chips">
+<a class="glass chip" href="#videostena"><b>Видеостены</b><span>корпуса и стойки</span></a>
+<a class="glass chip" href="#catalog"><b>LED-экраны</b><span>каркасы под кабинет</span></a>
+<a class="glass chip" href="#catalog"><b>Моторизация</b><span>поворот и лифт</span></a>
+<a class="glass chip" href="#catalog"><b>Лючки</b><span>архитектурные</span></a>
+</div>
+<div class="facts"><span>С 2012</span><span>от 1 дня</span><span>от 1 шт.</span><span>Коледино</span></div>
+<div class="section">
+<h2>Шесть изделий</h2>
+<div class="grid g3">
+<a class="glass tile" href="#product"><small>TEGAR · 10-25-010</small><h3>Модуль полного выдвижения с фиксатором. TEGAR Push-Out FIX</h3><span class="muted">Цена по ТЗ</span></a>
+<a class="glass tile" href="#product"><small>15-20-010</small><h3>Плинт потолочный для LED-экрана, 1280×2400 мм</h3><span class="muted">Цена по ТЗ</span></a>
+<a class="glass tile" href="#product"><small>AVANTER · 30-25-005</small><h3>Устройство моторизованное поворотное 350°. AVANTER W-TURN-TV1</h3><span class="muted">Цена по ТЗ</span></a>
+<a class="glass tile" href="#product"><small>40-15-020</small><h3>Органайзер для розеток в лючок</h3><span class="muted">Цена по ТЗ</span></a>
+<a class="glass tile" href="#product"><small>92-30-045</small><h3>Универсальная настольная подставка. УНП 50</h3><span class="muted">Цена по ТЗ</span></a>
+<a class="glass tile" href="#product"><small>TEGAR</small><h3>Кассовая POS-стойка двухплечевая T-образная TEGAR-POS-2P-M2T</h3><span class="muted">Цена по ТЗ</span></a>
+</div>
+</div>
+</section>
+
+<section id="catalog" class="page">
+<div class="glass card" style="margin:12px 0 22px"><h1>Все направления.</h1><p>Каркасы, кронштейны, моторизация и RACK — выбирайте линейку и отправляйте ТЗ инженеру.</p><a class="cta" href="#rfq">Получить артикул →</a></div>
+<div class="grid g2" id="dirs"></div>
+</section>
+
+<section id="videostena" class="page">
+<div class="glass card" style="margin:12px 0 22px"><h1>Видеостены (каркасы).</h1><p>Профессиональный настенный и распорный каркас. Конфигурация, VESA и нагрузка закладываются в ТЗ.</p></div>
+<div class="grid g2">
+<a class="glass tile" href="#product"><small>TEGAR · 10-25-010</small><h3>TEGAR Push-Out FIX</h3></a>
+<a class="glass tile" href="#product"><small>TEGAR · 10-10-120</small><h3>Каркас настенный 3×2 push-out. TEGAR WMS-W-PO-3x2</h3></a>
+<a class="glass tile" href="#product"><small>TEGAR</small><h3>Каркас распорный 2×4 откидной. TEGAR WMS-FC-IT-2x4</h3></a>
+<a class="glass tile" href="#product"><small>TEGAR</small><h3>Каркас напольный 3×4 push-out. TEGAR WMS-F-PO-3x4</h3></a>
+</div>
+</section>
+
+<section id="product" class="page">
+<div class="glass card" style="max-width:720px;margin:12px 0 22px">
+<small class="muted">TEGAR · арт. 10-10-120</small>
+<h1>Каркас настенный для видеостены 3×2, полного выдвижения push-out. TEGAR WMS-W-PO-3x2</h1>
+<p>Профессиональный настенный каркас для видеостены из ЖК-панелей в одну плоскость. Конфигурация матрицы 3×2 — 6 панелей. Сервисный доступ — модули push-out.</p>
+<div class="spec">
+<b>Нагрузка</b><span>~300 кг</span>
+<b>VESA</b><span>300×300, 400×400, 600×400 мм</span>
+<b>Диагональ</b><span>49–55"</span>
+<b>Материал</b><span>Сталь холодного проката, алюминий АД-31</span>
+<b>Цена</b><span>От 175 500 руб. Конечная цена зависит от ТЗ</span>
+<b>Отгрузка</b><span>Коледино</span>
+</div>
+<div style="display:flex;gap:10px;margin-top:22px">
+<a class="cta" href="#rfq">Получить артикул →</a>
+<a class="cta" href="#rfq" style="background:transparent;border:1px solid var(--line)">Скачать чертёж</a>
+</div>
+</div>
+</section>
+
+<section id="production" class="page">
+<div class="glass card" style="margin:12px 0 22px"><h1>Производство.</h1><p>Коледино. Лазер, гибка DURMA, сварка, порошок. TRUMPF TruLaser 3030.</p></div>
+<div class="grid g3" id="shops"></div>
+</section>
+
+<section id="project" class="page">
+<div class="glass card" style="margin:12px 0 22px"><h1>Диспетчерская · 6 мониторов</h1><p>Настольный универсальный кронштейн для 6-ти мониторов.</p></div>
+<div class="grid g2">
+<div class="glass tile"><small>Объект</small><h3>LED-видеостена</h3><p class="muted">Каркас напольный для светодиодной видеостены</p></div>
+<div class="glass tile"><small>Объект</small><h3>Транспортная инфраструктура</h3><p class="muted">Информационное табло</p></div>
+<div class="glass tile"><small>Объект</small><h3>Витрина</h3><p class="muted">Потолочный кронштейн в витрину</p></div>
+<div class="glass tile"><small>Объект</small><h3>Защитный бокс для проектора</h3></div>
+</div>
+</section>
+
+<section id="article" class="page">
+<div class="glass card" style="max-width:720px;margin:12px 0">
+<small class="muted">Крепления для ТВ</small>
+<h1>Как выбрать кронштейн для телевизора: типы, VESA и нагрузка</h1>
+<p>Правильно подобранное крепление обеспечивает эстетику интерьера и безопасность дорогостоящей техники.</p>
+<p>Стандарт VESA, нагрузка и тип установки читаются из модели. Конечная спецификация фиксируется в ТЗ.</p>
+</div>
+</section>
+
+<section id="about" class="page">
+<div class="glass card" style="margin:12px 0">
+<h1>О компании.</h1>
+<p>ПК «Аллегри» — крепёжные и несущие конструкции для профессионального оборудования. Своё производство в Коледино. 21 направление, от единичного узла до серии.</p>
+<p>sale@allegri-group.ru · +7 (991) 570-16-00</p>
+</div>
+</section>
+
+<section id="rfq" class="page">
+<div class="glass card" style="margin:12px 0">
+<h1>Получить артикул.</h1>
+<p>Конструкторский отдел принимает PDF, DWG, DXF, STEP — до 25 МБ. В этом демо форма никуда не уходит.</p>
+<form class="form" onsubmit="event.preventDefault();alert('Демо: заявка не отправлена.');">
+<input placeholder="Имя">
+<input placeholder="Телефон" value="+7 (991) 570-16-00">
+<input placeholder="Email" value="sale@allegri-group.ru">
+<textarea placeholder="Кратко ТЗ: направление, диагональ, VESA, нагрузка"></textarea>
+<button class="cta" type="submit">Отправить техническое задание</button>
+</form>
+</div>
+</section>
+
+<footer>
+<span>Коледино · ПК «Аллегри»</span>
+<span>sale@allegri-group.ru</span>
+</footer>
+</div>
+<script>
+const dirs=['Видеостены (каркасы)','Светодиодные видеостены/LED-экраны (каркасы)','Моторизованные решения','Архитектурные лючки','Кронштейны для ЖК панелей и ТВ','Кронштейны для кассового оборудования','Кофры транспортировочные (FLIGHTCASE)','Шкафы телекоммуникационные (RACK)','Шкафы электротехнические','Прочее','Фермы подвесные','Киоски и терминалы','Крепления для проекторов','Стойки ВКС','Трибуны для выступлений','Мобильные зарядные станции','Крепления для аудиоколонок','Подставки и крепления для планшетов','Суфлеры','Стойки презентационные для ЖК-панелей и ТВ','Столы'];
+const shops=['Лазерная резка листового металла','Лазерная резка труб','Гибка металла','Сварочные работы','Токарные и фрезеровочные работы','Столярный участок','Порошковая покраска','Лакокрасочные работы','Участок литья пластиковых деталей','Швейный участок','Сборочный и упаковочный участок','Электромонтажные работы'];
+document.getElementById('dirs').innerHTML=dirs.map((d,i)=>'<a class="glass tile" href="#videostena"><small>0'+(i+1).toString().slice(-2)+'</small><h3>'+d+'</h3></a>').join('');
+document.getElementById('shops').innerHTML=shops.map(s=>'<div class="glass tile"><small>Участок</small><h3>'+s+'</h3></div>').join('');
+function show(){const id=(location.hash||'#home').slice(1);document.querySelectorAll('.page').forEach(p=>p.classList.toggle('on',p.id===id));document.querySelectorAll('[data-nav]').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+id));window.scrollTo(0,0)}
+window.addEventListener('hashchange',show);show();
+</script>
+</body>
+</html>
