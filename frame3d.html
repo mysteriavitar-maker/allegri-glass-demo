@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>3D-каркас — демо Аллегри</title>
+<style>
+:root{--ink:#232837;--gold:#c8af87;--line:#e7e1d6;--paper:#f4f1ea}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.45 Georgia,serif}
+header{background:var(--ink);color:#f4f1ea;padding:18px 24px}
+header small{letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font:600 11px system-ui,sans-serif}
+h1{margin:6px 0 0;font-weight:500;font-size:28px}
+header p{margin:6px 0 0;color:#d9d3c7;max-width:720px}
+.wrap{display:grid;grid-template-columns:300px 1fr;gap:16px;max-width:1180px;margin:0 auto;padding:16px}
+.sheet,.stage{background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:0 10px 28px rgba(35,40,55,.06)}
+.sheet{padding:16px 16px 20px}
+label{display:block;margin:12px 0 6px;font:600 12px system-ui,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#6d675e}
+select{width:100%;height:40px;border-radius:999px;border:1px solid var(--ink);background:#fff;padding:0 12px;font:600 14px system-ui,sans-serif}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+button{margin-top:16px;width:100%;height:42px;border:0;border-radius:999px;background:var(--gold);color:var(--ink);font:700 15px system-ui,sans-serif;cursor:pointer}
+.note{margin:12px 0 0;font:13px/1.4 system-ui,sans-serif;color:#6d675e}
+.stage{position:relative;min-height:560px;overflow:hidden}
+canvas{width:100%;height:560px;display:block}
+.out{position:absolute;left:14px;right:14px;bottom:14px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:flex;justify-content:space-between;gap:12px}
+.badge{font:600 11px system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#8a7044}
+.price{font:600 18px system-ui,sans-serif;color:#8a7044}
+@media(max-width:860px){.wrap{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+<small>Демо · 3D · только по ссылке</small>
+<h1>Каркас в объёме</h1>
+<p>Крутите макет мышью. Стойки, ригели и модули собираются под матрицу. Это не DWG, а узлы.</p>
+</header>
+<div class="wrap">
+<aside class="sheet">
+<label>Установка</label>
+<select id="mount"><option value="FC">Распорный</option><option value="W">Настенный</option><option value="F">Напольный</option><option value="FW">Напольно-настенный</option></select>
+<label>Доступ</label>
+<select id="access"><option value="IT">Откидной</option><option value="PO" selected>Push-out</option></select>
+<div class="row"><div><label>Столбцы</label><select id="cols"></select></div><div><label>Ряды</label><select id="rows"></select></div></div>
+<button id="send" type="button">Отправить инженеру</button>
+<p class="note" id="hint">Цена с витрины, подтвердить. Доставка и монтаж не входят.</p>
+</aside>
+<section class="stage">
+<canvas id="c"></canvas>
+<div class="out"><div><div class="badge">Артикул</div><b id="sku">TEGAR WMS-FC-PO-2x2</b></div><div><div class="badge">Цена от</div><div class="price" id="price">156 000 руб.</div></div></div>
+</section>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script>
+const PRICE={'FC|IT|2x2':83000,'FC|IT|2x4':173000,'FC|IT|3x4':265500,'FC|IT|4x2':175500,'FC|IT|4x3':266500,'FC|PO|2x2':156000,'FC|PO|2x4':317000,'FC|PO|3x4':482500,'FC|PO|4x2':320500,'FC|PO|4x3':484000,'W|IT|2x2':43500,'W|IT|4x2':86500,'W|IT|4x3':130000,'W|PO|2x2':116500,'W|PO|3x2':175500,'W|PO|3x4':350500,'W|PO|4x2':234000,'W|PO|4x3':350500,'F|IT|2x2':83000,'F|PO|2x2':156000,'FW|IT|2x3':127500,'FW|IT|3x3':197000,'FW|PO|2x2':156000,'FW|PO|2x3':236500};
+const cols=document.getElementById('cols'), rows=document.getElementById('rows');
+for(let i=2;i<=4;i++){cols.add(new Option(i,i));rows.add(new Option(i,i));}
+const canvas=document.getElementById('c');
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.setClearColor(0xf7f4ee,1);
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(40,1,0.1,80);
+camera.position.set(5.2,2.8,6.4);
+const controls=new THREE.OrbitControls(camera,canvas);
+controls.enableDamping=true; controls.target.set(0,1.1,0);
+scene.add(new THREE.AmbientLight(0xffffff,0.7));
+const sun=new THREE.DirectionalLight(0xffffff,0.85); sun.position.set(5,9,6); scene.add(sun);
+const fill=new THREE.DirectionalLight(0xc8af87,0.25); fill.position.set(-4,3,-2); scene.add(fill);
+const group=new THREE.Group(); scene.add(group);
+const steel=new THREE.MeshStandardMaterial({color:0x2b303b,metalness:0.55,roughness:0.38});
+const panel=new THREE.MeshStandardMaterial({color:0x141820,metalness:0.15,roughness:0.55});
+const gold=new THREE.MeshStandardMaterial({color:0xc8af87,metalness:0.45,roughness:0.35});
+const wall=new THREE.MeshStandardMaterial({color:0xe7e1d6,roughness:0.9});
+function box(w,h,d,mat,x,y,z){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);m.position.set(x,y,z);group.add(m);}
+function build(){
+while(group.children.length) group.remove(group.children[0]);
+const c=+cols.value,r=+rows.value,mount=document.getElementById('mount').value,acc=document.getElementById('access').value;
+const pw=1.22,ph=0.72,gap=0.045,push=acc==='PO'?0.42:0.1;
+const W=c*pw+(c-1)*gap,H=r*ph+(r-1)*gap;
+const x0=-W/2, y0=0.15;
+if(mount==='W'||mount==='FW') box(W+0.7,H+0.7,0.06,wall,0,y0+H/2,-0.18);
+for(let i=0;i<=c;i++){const x=x0+i*(pw+gap)-gap/2; box(0.055,H+0.28,0.055,steel,x,y0+H/2,0);}
+for(let j=0;j<=r;j++){const y=y0+j*(ph+gap); box(W+0.12,0.04,0.05,steel,0,y,0);}
+for(let j=0;j<r;j++) for(let i=0;i<c;i++){
+const x=x0+i*(pw+gap)+pw/2, y=y0+j*(ph+gap)+ph/2;
+box(0.16,0.06,push,gold,x,y,push/2);
+box(pw-0.1,ph-0.1,0.045,panel,x,y,push+0.03);
+}
+if(mount==='F'||mount==='FW'||mount==='FC'){
+box(0.32,0.05,0.42,steel,x0,0.03,0.08);
+box(0.32,0.05,0.42,steel,-x0,0.03,0.08);
+}
+if(mount==='FC'){
+box(0.06,H+1.1,0.06,steel,x0-0.18,y0+H/2,0);
+box(0.06,H+1.1,0.06,steel,-x0+0.18,y0+H/2,0);
+}
+const key=mount+'|'+acc+'|'+c+'x'+r, price=PRICE[key];
+const sku='TEGAR WMS-'+mount+'-'+acc+'-'+c+'x'+r;
+document.getElementById('sku').textContent=sku;
+document.getElementById('price').textContent=price?('от '+price.toLocaleString('ru-RU')+' руб.'):'Заявка инженеру';
+document.getElementById('hint').textContent=price?'Цена с витрины, подтвердить. Доставка и монтаж не входят.':'Этой матрицы в таблице нет. Цену не считаем.';
+}
+function fit(){const w=canvas.clientWidth||640,h=560;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();}
+function loop(){requestAnimationFrame(loop);controls.update();fit();renderer.render(scene,camera);}
+['mount','access','cols','rows'].forEach(id=>document.getElementById(id).onchange=build);
+document.getElementById('send').onclick=()=>alert('Демо. Заявка: '+document.getElementById('sku').textContent+', '+document.getElementById('price').textContent);
+build(); fit(); loop();
+</script>
+</body>
+</html>
